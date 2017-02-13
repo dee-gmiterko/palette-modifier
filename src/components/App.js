@@ -56,9 +56,23 @@ class App extends Component {
       palette: palette
     });
 
-    var image = this.state.modifier.modify(this.state.palette);
+    this.updateImage();
+  }
+
+  changePaletteColors(palette) {
     this.setState({
-      image: image
+      palette: palette
+    });
+
+    this.updateImage();
+  }
+
+  updateImage() {
+    var image, debugImage;
+    [image, debugImage] = this.state.modifier.modify(this.state.palette);
+    this.setState({
+      image: image,
+      debugImage: debugImage
     });
   }
 
@@ -75,7 +89,7 @@ class App extends Component {
             <TabSelect image={this.state.originalImage} changeImage={this.changeImage.bind(this)} />
           </div>
           <div className="tabs-panel" id="modify">
-            <TabModify image={this.state.image} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)}/>
+            <TabModify image={this.state.image} debugImage={this.state.debugImage} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)}/>
           </div>
           <div className="tabs-panel" id="download">
             <TabDownload image={this.state.image} />

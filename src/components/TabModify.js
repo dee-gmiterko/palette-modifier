@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import chroma from 'chroma-js';
 
 import ColorPicker from './ColorPicker';
+import RandomColorsButton from './RandomColorsButton';
 
 class TabModify extends Component {
 
@@ -22,8 +23,8 @@ class TabModify extends Component {
 
       return (
         <div>
-          <div className="row">
-            <img src={this.props.image} alt="Linda" />
+          <div className="row" class="mainImage">
+            <img src={this.props.image} alt="Linda after" />
           </div>
           <div className="row">
             {palette.map((color, i) => {
@@ -31,6 +32,9 @@ class TabModify extends Component {
                 <ColorPicker color={color} onChange={this.changePaletteColor.bind(this, i)} />
               </div>
             })}
+          </div>
+          <div className="row">
+            <RandomColorsButton changePaletteColors={this.props.changePaletteColors} />
           </div>
         </div>
       );
