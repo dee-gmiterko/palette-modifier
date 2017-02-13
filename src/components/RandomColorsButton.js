@@ -8,7 +8,7 @@ class RandomColorsButton extends Component {
 
     var scheme = [];
 
-    while(scheme.length < 6) {
+    while(scheme.length < 5) {
       scheme.push(make_color({
         format: 'hex',
         golden: false

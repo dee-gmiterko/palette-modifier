@@ -19,6 +19,7 @@ class TabModify extends Component {
           <p className="button alert small expanded" onClick={() => $('#app-tabs').foundation('selectTab', 'select')}>Please, select image first</p>
         </div>
       );
+
     } else {
 
       var palette = this.props.palette.map(color => color.hex());
@@ -40,6 +41,11 @@ class TabModify extends Component {
             </div>
             <div className="tools padding-top">
               <RandomColorsButton changePaletteColors={this.props.changePaletteColors} />
+              <select value={this.props.imageType} onChange={event => this.props.changeImageType(event.target.value)}>
+                <option value="original">Orignal</option>
+                <option value="preview">Image</option>
+                <option value="debug">Debug</option>
+              </select>
             </div>
           </div>
           <div className="small-12 columns">

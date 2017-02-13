@@ -1,3 +1,4 @@
+import {sineInOut} from 'eases';
 import {range} from 'range';
 
 export default function(sourcePoints, targetPoints) {
@@ -16,8 +17,6 @@ export default function(sourcePoints, targetPoints) {
 		z.sort((a, b) => { return a[0] - b[0] });
 		return z;
 	});
-
-	interpolations.forEach(ints => console.log(JSON.stringify(ints)));
 
 	return (point) => {
 		return point.slice(0, 3).map((a, i) => {
@@ -41,8 +40,9 @@ export default function(sourcePoints, targetPoints) {
 
 		    var d = x2 - x1;
 
-		    var r = (d - (a-x1)) * y1 + (d - (x2-a)) * y2;
-		    return r / d;
+		    var e = sineInOut((a-x1) / d);
+		    var r = (1-e) * y1 + (e) * y2;
+		    return r;
 		});
 	}
 }

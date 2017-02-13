@@ -29,7 +29,7 @@ class TabSelect extends Component {
 				<div className="small-12 columns">
 					<p className="text-center">
 						<br />Change color palette of your image to anything you want!
-						<br /><img src={require('../images/example.png')} style={{margin: '1rem', width: 'auto', maxHeight: '140px'}} />
+						<br /><img src={require('../images/example.png')} alt="Example of usage" style={{margin: '1rem', width: 'auto', maxHeight: '140px'}} />
 						<br />Image + Color palette = New image
 					</p>
 				</div>

@@ -14,6 +14,7 @@ class App extends Component {
     this.state = {
       originalFile: null,
       originalImage: null,
+      imageType: "preview",
       image: null,
       originalPalette: null,
       palette: null
@@ -33,7 +34,7 @@ class App extends Component {
     getColors(image).then(palette => {
 
       var modifier = new PaletteModifier(image, palette);
-      modifier.init();
+      modifier.init(() => {this.updateImage(palette)});
 
       this.setState({
         originalFile: file,
@@ -47,9 +48,6 @@ class App extends Component {
   }
 
   changePaletteColor(index, color) {
-
-    console.log("changePaletteColor");
-
     var palette = this.state.palette.slice();
     palette[index] = color;
     this.setState({
@@ -68,11 +66,16 @@ class App extends Component {
   }
 
   updateImage(palette) {
-    var image, debugImage;
-    [image, debugImage] = this.state.modifier.modify(palette);
+    this.state.modifier.modify(palette);
     this.setState({
-      image: image,
-      debugImage: debugImage
+      image: this.state.modifier.getImage(this.state.imageType)
+    });
+  }
+
+  changeImageType(type) {
+    this.setState({
+      imageType: type,
+      image: this.state.modifier.getImage(type)
     });
   }
 
@@ -89,10 +92,10 @@ class App extends Component {
             <TabSelect image={this.state.originalImage} changeImage={this.changeImage.bind(this)} />
           </div>
           <div className="tabs-panel" id="modify">
-            <TabModify image={this.state.image} debugImage={this.state.debugImage} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)}/>
+            <TabModify image={this.state.image} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)} imageType={this.state.imageType} changeImageType={this.changeImageType.bind(this)} />
           </div>
           <div className="tabs-panel" id="download">
-            <TabDownload image={this.state.image} getImageBlob={this.state.modifier ? this.state.modifier.getImageBlob.bind(this.state.modifier) : null} />
+            <TabDownload image={this.state.image} getImageBlob={this.state.modifier ? this.state.modifier.getFullImageBlob.bind(this.state.modifier, this.state.palette) : null} />
           </div>
         </div>
       </div>

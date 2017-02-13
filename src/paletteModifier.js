@@ -12,69 +12,108 @@ class PaletteModifier {
 
 		this.htmlImage = new Image();
 		this.htmlImage.addEventListener('load', function() {
-			self.initCanvas(this.width, this.height, callback);
+			self.initCanvases(this.width, this.height, callback);
 		}, false);
 		this.htmlImage.src = this.originalImage;
 	}
 
-	initCanvas(width, height, callback) {
-		this.canvas = document.createElement('canvas');
-		this.canvas.width = width;
-		this.canvas.height = height;
+	initCanvases(imageWidth, imageHeight, callback) {
+		this.canvasFull = document.createElement('canvas');
+		this.canvasFull.width = imageWidth;
+		this.canvasFull.height = imageHeight;
 
-		this.context = this.canvas.getContext("2d");
+		this.canvasPreview = document.createElement('canvas');
+		this.canvasPreview.width = Math.min(imageWidth, 1000);
+		this.canvasPreview.height = Math.floor(imageHeight / (imageWidth / this.canvasPreview.width));
+
+		this.canvasDebug = document.createElement('canvas');
+		this.canvasDebug.width = 3*255;
+		this.canvasDebug.height = 255;
 
 		if(callback) callback();
 	}
 
 	modify(palette) {
 
+		console.log("modify");
+
 		var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()));
-		// Debug
+		
+		// Preview
 
-		this.context.fillStyle = 'white';
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		var cxtPreview = this.canvasPreview.getContext("2d");
 
-		this.context.strokeStyle = 'rgba(255, 0, 0, 1)';
-		for(var i=1; i<255; i++) {
-			this.context.beginPath();
-			this.context.moveTo(0*255+ i-1, Math.round(cmt([i-1, 0, 0])[0]));
-			this.context.lineTo(0*255+ i, Math.round(cmt([i, 0, 0])[0]));
-			this.context.stroke();
-		}
+		cxtPreview.drawImage(this.htmlImage, 0, 0, this.canvasPreview.width, this.canvasPreview.height);
 
-		this.context.strokeStyle = 'rgba(0, 255, 0, 1)';
-		for(i=1; i<255; i++) {
-			this.context.beginPath();
-			this.context.moveTo(1*255+ i-1, Math.round(cmt([0, i-1, 0])[1]));
-			this.context.lineTo(1*255+ i, Math.round(cmt([0, i, 0])[1]));
-			this.context.stroke();
-		}
-
-		this.context.strokeStyle = 'rgba(0, 0, 255, 1)';
-		for(i=1; i<255; i++) {
-			this.context.beginPath();
-			this.context.moveTo(2*255+ i-1, Math.round(cmt([0, 0, i-1])[2]));
-			this.context.lineTo(2*255+ i, Math.round(cmt([0, 0, i])[2]));
-			this.context.stroke();
-		}
-
-		var debugImage = this.canvas.toDataURL();
-
-		// Image
-
-		this.context.drawImage(this.htmlImage, 0, 0);
-
-		this.modifyPixels(pixel => {
+		this.modifyPixels(this.canvasPreview, pixel => {
 			var po = cmt(pixel);
 			return [Math.round(po[0]), Math.round(po[1]), Math.round(po[2]), 255];
 		});
 
-		return [this.canvas.toDataURL(), debugImage];
+		// Debug
+
+		var cxtDebug = this.canvasDebug.getContext("2d");
+
+		cxtDebug.fillStyle = 'white';
+		cxtDebug.fillRect(0, 0, 3*255, 255);
+
+		cxtDebug.strokeStyle = 'rgba(255, 0, 0, 1)';
+		for(var i=1; i<255; i++) {
+			cxtDebug.beginPath();
+			cxtDebug.moveTo(0*255+ i-1, 255-Math.round(cmt([i-1, 0, 0])[0]));
+			cxtDebug.lineTo(0*255+ i, 255-Math.round(cmt([i, 0, 0])[0]));
+			cxtDebug.stroke();
+		}
+
+		cxtDebug.strokeStyle = 'rgba(0, 255, 0, 1)';
+		for(i=1; i<255; i++) {
+			cxtDebug.beginPath();
+			cxtDebug.moveTo(1*255+ i-1, 255-Math.round(cmt([0, i-1, 0])[1]));
+			cxtDebug.lineTo(1*255+ i, 255-Math.round(cmt([0, i, 0])[1]));
+			cxtDebug.stroke();
+		}
+
+		cxtDebug.strokeStyle = 'rgba(0, 0, 255, 1)';
+		for(i=1; i<255; i++) {
+			cxtDebug.beginPath();
+			cxtDebug.moveTo(2*255+ i-1, 255-Math.round(cmt([0, 0, i-1])[2]));
+			cxtDebug.lineTo(2*255+ i, 255-Math.round(cmt([0, 0, i])[2]));
+			cxtDebug.stroke();
+		}
 	}
 
-	modifyPixels(f) {
-		var imgData = this.context.getImageData(0,0,this.canvas.width,this.canvas.height);
+	getImage(type) {
+		switch(type) {
+			case 'original':
+			return this.originalImage;
+			case 'preview':
+			return this.canvasPreview.toDataURL();
+			case 'full':
+			throw new Error("Use getFullImageBlob instead (this can take long, so its async)");
+			case 'debug':
+			return this.canvasDebug.toDataURL();
+		}
+	}
+
+	getFullImageBlob(palette, callback) {
+		setTimeout(() => {
+
+			var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()));
+
+			this.canvasFull.getContext("2d").drawImage(this.htmlImage, 0, 0);
+
+			this.modifyPixels(this.canvasFull, pixel => {
+				var po = cmt(pixel);
+				return [Math.round(po[0]), Math.round(po[1]), Math.round(po[2]), 255];
+			});
+
+			this.canvasFull.toBlob(callback);
+
+		}, 1);
+	}
+
+	modifyPixels(canvas, f) {
+		var imgData = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height);
 		var data = imgData.data;
 
 		for(var i=0; i<data.length; i+=4) {
@@ -87,11 +126,7 @@ class PaletteModifier {
 			data[i+3] = modifiedPixel[3];
 		}
 
-		this.context.putImageData(imgData, 0, 0);
-	}
-
-	getImageBlob(callback) {
-		this.canvas.toBlob(callback);
+		canvas.getContext("2d").putImageData(imgData, 0, 0);
 	}
 }
 
