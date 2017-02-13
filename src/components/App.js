@@ -56,7 +56,7 @@ class App extends Component {
       palette: palette
     });
 
-    this.updateImage();
+    this.updateImage(palette);
   }
 
   changePaletteColors(palette) {
@@ -64,12 +64,12 @@ class App extends Component {
       palette: palette
     });
 
-    this.updateImage();
+    this.updateImage(palette);
   }
 
-  updateImage() {
+  updateImage(palette) {
     var image, debugImage;
-    [image, debugImage] = this.state.modifier.modify(this.state.palette);
+    [image, debugImage] = this.state.modifier.modify(palette);
     this.setState({
       image: image,
       debugImage: debugImage

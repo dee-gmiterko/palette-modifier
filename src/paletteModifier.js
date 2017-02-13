@@ -12,7 +12,7 @@ class PaletteModifier {
 
 		this.htmlImage = new Image();
 		this.htmlImage.addEventListener('load', function() {
-			self.initCanvas(255*3/*this.width*/, this.height, callback);
+			self.initCanvas(this.width, this.height, callback);
 		}, false);
 		this.htmlImage.src = this.originalImage;
 	}
@@ -88,6 +88,10 @@ class PaletteModifier {
 		}
 
 		this.context.putImageData(imgData, 0, 0);
+	}
+
+	getImageBlob(callback) {
+		this.canvas.toBlob(callback);
 	}
 }
 

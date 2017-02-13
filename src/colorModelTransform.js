@@ -1,4 +1,3 @@
-import interpolatingPolynomial from 'interpolating-polynomial';
 import {range} from 'range';
 
 export default function(sourcePoints, targetPoints) {
@@ -29,7 +28,7 @@ export default function(sourcePoints, targetPoints) {
 		        high++;
 		    }
 
-		    if(high == 0) {
+		    if(high === 0) {
 		    	return interpolations[i][high][1];
 		    }
 
@@ -41,10 +40,6 @@ export default function(sourcePoints, targetPoints) {
 		    var y2 = interpolations[i][high][1];
 
 		    var d = x2 - x1;
-
-		    if(d==0) {
-		    	console.log({low, high, i, x1, y1, x2, y2, a});
-		    }
 
 		    var r = (d - (a-x1)) * y1 + (d - (x2-a)) * y2;
 		    return r / d;
