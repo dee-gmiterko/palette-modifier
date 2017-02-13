@@ -6,15 +6,12 @@ class RandomColorsButton extends Component {
 
   randomiseColors() {
 
-    var scheme = make_scheme(make_color({'format': 'hsv', 'golden': false})[0],
-    {
-      scheme_type: 'mono',
-      format: 'hex'
-    }).slice(0, 6);
+    var scheme = [];
 
     while(scheme.length < 6) {
       scheme.push(make_color({
-        format: 'hex'
+        format: 'hex',
+        golden: false
       })[0]);
     }
 
@@ -22,7 +19,7 @@ class RandomColorsButton extends Component {
   }
 
   render() {
-    return <button onClick={this.randomiseColors.bind(this)}>Random</button>
+    return <button className="button" onClick={this.randomiseColors.bind(this)}>Random</button>
   }
 }
 

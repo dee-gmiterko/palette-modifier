@@ -1,3 +1,5 @@
+/* eslint-env browser, jquery */
+
 import React, { Component } from 'react';
 import chroma from 'chroma-js';
 
@@ -14,7 +16,7 @@ class TabModify extends Component {
     if(!this.props.image) {
       return (
         <div>
-          <h2>Please, select image first</h2>
+          <p className="button alert small expanded" onClick={() => $('#app-tabs').foundation('selectTab', 'select')}>Please, select image first</p>
         </div>
       );
     } else {
@@ -22,19 +24,29 @@ class TabModify extends Component {
       var palette = this.props.palette.map(color => color.hex());
 
       return (
-        <div>
-          <div className="row" class="mainImage">
-            <img src={this.props.image} alt="Linda after" />
+        <div className="row">
+          <div className="small-12 large-8 columns">
+            <div className="text-center" style={{background: '#aaa'}}>
+              <img src={this.props.image} alt="Modified img" />
+            </div>
           </div>
-          <div className="row">
-            {palette.map((color, i) => {
-              return <div key={i} className="small-6 medium-4 large-2 columns">
-                <ColorPicker color={color} onChange={this.changePaletteColor.bind(this, i)} />
-              </div>
-            })}
+          <div className="small-12 large-4 columns">
+            <div className="palette row collapse">
+              {palette.map((color, i) => {
+                return <div key={i} className="small-6 medium-4 large-2 columns">
+                  <ColorPicker color={color} onChange={this.changePaletteColor.bind(this, i)} />
+                </div>
+              })}
+            </div>
+            <div className="tools padding-top">
+              <RandomColorsButton changePaletteColors={this.props.changePaletteColors} />
+            </div>
           </div>
-          <div className="row">
-            <RandomColorsButton changePaletteColors={this.props.changePaletteColors} />
+          <div className="small-12 columns">
+            <div className="clearfix padding-top">
+              <p className="float-left button small" onClick={() => $('#app-tabs').foundation('selectTab', 'select')}>Select other image</p>
+              <p className="float-right button small" onClick={() => $('#app-tabs').foundation('selectTab', 'download')}>Download result</p>
+            </div>
           </div>
         </div>
       );

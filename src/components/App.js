@@ -80,11 +80,11 @@ class App extends Component {
     return (
       <div className="row" id="palette-modifier">
         <ul className="tabs" data-tabs id="app-tabs">
-          <li className="tabs-title is-active"><a href="#select" aria-selected="true">Select image</a></li>
-          <li className="tabs-title"><a href="#modify">Modify</a></li>
-          <li className="tabs-title"><a href="#download">Download</a></li>
+          <li className="tabs-title is-active"><a href="#select" aria-selected="true">1. Select image</a></li>
+          <li className="tabs-title"><a href="#modify">2. Modify</a></li>
+          <li className="tabs-title"><a href="#download">3. Download</a></li>
         </ul>
-        <div className="tabs-content" data-tabs-content="example-tabs">
+        <div className="tabs-content" data-tabs-content="app-tabs">
           <div className="tabs-panel is-active" id="select">
             <TabSelect image={this.state.originalImage} changeImage={this.changeImage.bind(this)} />
           </div>
@@ -92,7 +92,7 @@ class App extends Component {
             <TabModify image={this.state.image} debugImage={this.state.debugImage} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)}/>
           </div>
           <div className="tabs-panel" id="download">
-            <TabDownload image={this.state.image} />
+            <TabDownload image={this.state.image} getImageBlob={this.state.modifier ? this.state.modifier.getImageBlob.bind(this.state.modifier) : null} />
           </div>
         </div>
       </div>
