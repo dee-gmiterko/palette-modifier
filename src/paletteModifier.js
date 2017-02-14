@@ -95,6 +95,8 @@ class PaletteModifier {
 			throw new Error("Use getFullImageBlob instead (this can take long, so its async)");
 			case 'debug':
 			return this.canvasDebug.toDataURL();
+			default:
+			throw new Error("Unknown image type");
 		}
 	}
 

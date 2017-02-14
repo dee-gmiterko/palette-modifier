@@ -92,7 +92,7 @@ class App extends Component {
             <TabSelect image={this.state.originalImage} changeImage={this.changeImage.bind(this)} />
           </div>
           <div className="tabs-panel" id="modify">
-            <TabModify image={this.state.image} palette={this.state.palette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)} imageType={this.state.imageType} changeImageType={this.changeImageType.bind(this)} />
+            <TabModify image={this.state.image} palette={this.state.palette} originalPalette={this.state.originalPalette} changePaletteColor={this.changePaletteColor.bind(this)} changePaletteColors={this.changePaletteColors.bind(this)} imageType={this.state.imageType} changeImageType={this.changeImageType.bind(this)} />
           </div>
           <div className="tabs-panel" id="download">
             <TabDownload image={this.state.image} getImageBlob={this.state.modifier ? this.state.modifier.getFullImageBlob.bind(this.state.modifier, this.state.palette) : null} />

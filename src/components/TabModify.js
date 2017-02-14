@@ -40,7 +40,8 @@ class TabModify extends Component {
               })}
             </div>
             <div className="tools padding-top">
-              <RandomColorsButton changePaletteColors={this.props.changePaletteColors} />
+              <RandomColorsButton palette={this.props.palette} changePaletteColors={this.props.changePaletteColors} />
+              <button className="button" onClick={() => this.props.changePaletteColors(this.props.originalPalette)}>Reset</button>
               <select value={this.props.imageType} onChange={event => this.props.changeImageType(event.target.value)}>
                 <option value="original">Orignal</option>
                 <option value="preview">Image</option>

@@ -2,6 +2,7 @@
   "name": "palette-modifier",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://linzee.github.io/palette-modifier",
   "devDependencies": {
     "autoprefixer": "6.7.2",
     "babel-core": "6.22.1",
@@ -64,7 +65,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js && sw-precache --config=sw-precache-config.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "deploy": "npm run build&&gh-pages -d build -b master"
   },
   "jest": {
     "collectCoverageFrom": [
