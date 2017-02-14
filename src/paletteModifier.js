@@ -56,29 +56,32 @@ class PaletteModifier {
 
 		cxtDebug.fillStyle = 'white';
 		cxtDebug.fillRect(0, 0, 3*255, 255);
+		
+		var p = cmt([0, 0, 0]);
 
-		cxtDebug.strokeStyle = 'rgba(255, 0, 0, 1)';
 		for(var i=1; i<255; i++) {
-			cxtDebug.beginPath();
-			cxtDebug.moveTo(0*255+ i-1, 255-Math.round(cmt([i-1, 0, 0])[0]));
-			cxtDebug.lineTo(0*255+ i, 255-Math.round(cmt([i, 0, 0])[0]));
-			cxtDebug.stroke();
-		}
 
-		cxtDebug.strokeStyle = 'rgba(0, 255, 0, 1)';
-		for(i=1; i<255; i++) {
-			cxtDebug.beginPath();
-			cxtDebug.moveTo(1*255+ i-1, 255-Math.round(cmt([0, i-1, 0])[1]));
-			cxtDebug.lineTo(1*255+ i, 255-Math.round(cmt([0, i, 0])[1]));
-			cxtDebug.stroke();
-		}
+			var t = cmt([i, i, i]);
 
-		cxtDebug.strokeStyle = 'rgba(0, 0, 255, 1)';
-		for(i=1; i<255; i++) {
+			cxtDebug.strokeStyle = 'rgba(255, 0, 0, 1)';
 			cxtDebug.beginPath();
-			cxtDebug.moveTo(2*255+ i-1, 255-Math.round(cmt([0, 0, i-1])[2]));
-			cxtDebug.lineTo(2*255+ i, 255-Math.round(cmt([0, 0, i])[2]));
+			cxtDebug.moveTo(0*255+ i-1, 255-Math.round(p[0]));
+			cxtDebug.lineTo(0*255+ i, 255-Math.round(t[0]));
 			cxtDebug.stroke();
+			
+			cxtDebug.strokeStyle = 'rgba(0, 255, 0, 1)';
+			cxtDebug.beginPath();
+			cxtDebug.moveTo(1*255+ i-1, 255-Math.round(p[1]));
+			cxtDebug.lineTo(1*255+ i, 255-Math.round(t[1]));
+			cxtDebug.stroke();
+			
+			cxtDebug.strokeStyle = 'rgba(0, 0, 255, 1)';
+			cxtDebug.beginPath();
+			cxtDebug.moveTo(2*255+ i-1, 255-Math.round(p[2]));
+			cxtDebug.lineTo(2*255+ i, 255-Math.round(t[2]));
+			cxtDebug.stroke();
+
+			p = t;
 		}
 	}
 
