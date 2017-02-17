@@ -1,6 +1,6 @@
 import {range} from 'range';
 
-export default function(sourcePoints, targetPoints) {
+export default function(sourcePoints, targetPoints, settings) {
 
 	sourcePoints = sourcePoints.concat([[0, 0, 0], [255, 255, 255]]);
 	targetPoints = targetPoints.concat([[0, 0, 0], [255, 255, 255]]);
@@ -39,9 +39,8 @@ export default function(sourcePoints, targetPoints) {
 		    return r;
 		};
 
-		var blurRange = range(-9, 9+1);
-		console.log(blurRange);
-		return range(0, 255).map(a => {
+		var blurRange = range(-1*settings.paletteBlur, settings.paletteBlur+1);
+		return range(0, 255+1).map(a => {
 			var n = blurRange.length;
 			var s = 0;
 			for(i of blurRange) {
@@ -57,6 +56,9 @@ export default function(sourcePoints, targetPoints) {
 
 	return (point) => {
 		return point.slice(0, 3).map((a, i) => {
+			if(a<0||a>255) {
+				console.log(a, i);
+			}
 			return interpolations[i][a];
 		});
 	}

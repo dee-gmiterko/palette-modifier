@@ -33,11 +33,9 @@ class PaletteModifier {
 		if(callback) callback();
 	}
 
-	modify(palette) {
+	modify(palette, settings) {
 
-		console.log("modify");
-
-		var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()));
+		var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()), settings);
 		
 		// Preview
 
@@ -54,11 +52,26 @@ class PaletteModifier {
 
 		var cxtDebug = this.canvasDebug.getContext("2d");
 
+		// background
 		cxtDebug.fillStyle = 'white';
 		cxtDebug.fillRect(0, 0, 3*255, 255);
-		
-		var p = cmt([0, 0, 0]);
 
+		// background lines
+		cxtDebug.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+		cxtDebug.lineWidth = 1;
+
+		cxtDebug.beginPath();
+		cxtDebug.moveTo(255, 0);
+		cxtDebug.lineTo(255, 255);
+		cxtDebug.stroke();
+
+		cxtDebug.beginPath();
+		cxtDebug.moveTo(510, 0);
+		cxtDebug.lineTo(510, 255);
+		cxtDebug.stroke();
+		
+		// lines
+		var p = cmt([0, 0, 0]);
 		for(var i=1; i<255; i++) {
 
 			var t = cmt([i, i, i]);
@@ -83,6 +96,18 @@ class PaletteModifier {
 
 			p = t;
 		}
+
+		// color points
+		var s = 4;
+		cxtDebug.strokeStyle = null;
+		for(i = 0; i<this.originalPalette.length; i++) {
+			var originalColor = this.originalPalette[i].rgb();
+			var color = palette[i].rgb();
+			cxtDebug.fillStyle = palette[i].css();
+			cxtDebug.fillRect(0*255 + originalColor[0] - s/2, 255 - color[0] - s/2, s, s);
+			cxtDebug.fillRect(1*255 + originalColor[1] - s/2, 255 - color[1] - s/2, s, s);
+			cxtDebug.fillRect(2*255 + originalColor[2] - s/2, 255 - color[2] - s/2, s, s);
+		};
 	}
 
 	getImage(type) {
@@ -100,10 +125,10 @@ class PaletteModifier {
 		}
 	}
 
-	getFullImageBlob(palette, callback) {
+	getFullImageBlob(palette, settings, callback) {
 		setTimeout(() => {
 
-			var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()));
+			var cmt = colorModelTransform(this.originalPalette.map(c => c.rgb()), palette.map(c => c.rgb()), settings);
 
 			this.canvasFull.getContext("2d").drawImage(this.htmlImage, 0, 0);
 

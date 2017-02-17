@@ -39,9 +39,10 @@ class TabSelect extends Component {
 					</Dropzone>
 				</div>
 				<div className="small-12 columns">
-					<div className="padding-top clearfix">
+					<footer className="padding-top clearfix text-center">
 						<p className="float-right button small" onClick={() => $('#app-tabs').foundation('selectTab', 'modify')}>Modify palette</p>
-					</div>
+						By <a href="http://ienze.me" target="blank">ienze</a> | <a href="https://github.com/Linzee/palette-modifier" target="blank">contribute</a>
+                    </footer>
 				</div>
 			</div>
 			);

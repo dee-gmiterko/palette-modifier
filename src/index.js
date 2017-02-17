@@ -13,6 +13,6 @@ import 'foundation-sites/dist/js/foundation.js';
 // import 'foundation-sites/js/foundation.tabs.js';
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );

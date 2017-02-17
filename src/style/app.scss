@@ -1,6 +1,98 @@
-@import "~foundation-sites/scss/foundation";
-@include foundation-everything;
+/*
+ * Settings
+ */
+ $button-margin: 0 0.6em 1.3em 0 !default;
 
+/*
+ * Include foundation
+ */
+@import "~foundation-sites/scss/foundation";
+@include foundation-global-styles;
+@include foundation-grid;
+@include foundation-typography;
+@include foundation-forms;
+@include foundation-button;
+@include foundation-button-group;
+@include foundation-tabs;
+@include foundation-float-classes;
+
+/*
+ * Custom styles
+ */
 .padding-top {
 	padding-top: 1rem;
+}
+
+.palette {
+	width: 100%;
+}
+
+#modify .palette {
+	border: 1px solid #aaa;
+	box-shadow: 0 0 3px #ccc;
+	line-height: 0;
+	margin-bottom: $global-margin;
+}
+
+.download-palette {
+	margin-top: 1em;
+	position: relative;
+	max-width: 300px;
+	width: 100%;
+	display: inline-block;
+
+	font-size: 1.35em;
+	color: #4E4E4E;
+
+	&::before {
+		content: "+";
+		position: absolute;
+		top: 0;
+		left: -1em;
+	}
+
+	&::after {
+		content: "=";
+		position: absolute;
+		top: 0;
+		right: -1em;
+	}
+}
+
+.palette .column-block {
+	margin-bottom: 0;
+}
+
+ul.share-buttons {
+	list-style: none;
+	padding: 0;
+	margin-left: 0;
+
+	li {
+		display: inline;
+	}
+
+	.sr-only {
+		position: absolute;
+		clip: rect(1px 1px 1px 1px);
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0;
+		border: 0;
+		height: 1px;
+		width: 1px;
+		overflow: hidden;
+	}
+
+	img {
+		width: 48px;
+	}
+}
+
+.button.dowload {
+	transition: transform 0.5s;
+}
+
+.button.dowload:active {
+	transform: scale(1.2);
+	cursor: wait;
 }
