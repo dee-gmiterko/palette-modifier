@@ -1,5 +1,10 @@
 {
-  "main.js": "static/js/main.84e350ab.js",
-  "main.js.map": "static/js/main.84e350ab.js.map",
+  "main.js": "static/js/main.06d6d3e5.js",
+  "main.js.map": "static/js/main.06d6d3e5.js.map",
+  "static\\media\\Facebook.svg": "static/media/Facebook.bc88ee0f.svg",
+  "static\\media\\Google+.svg": "static/media/Google+.de67370a.svg",
+  "static\\media\\Reddit.svg": "static/media/Reddit.18c0936e.svg",
+  "static\\media\\Tumblr.svg": "static/media/Tumblr.549e084d.svg",
+  "static\\media\\Twitter.svg": "static/media/Twitter.6b0fcb6a.svg",
   "static\\media\\example.png": "static/media/example.f82774ba.png"
 }
