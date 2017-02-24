@@ -36,13 +36,11 @@
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.3",
-    "interpolating-polynomial": "^1.1.2",
     "jest": "18.1.0",
     "jquery": "^3.1.1",
     "json-loader": "0.5.4",
     "node-sass": "^4.5.0",
     "object-assign": "4.1.1",
-    "pleasejs": "^0.4.2",
     "postcss-loader": "1.2.2",
     "promise": "7.1.1",
     "range": "0.0.3",
@@ -67,7 +65,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js && sw-precache --config=sw-precache-config.js",
+    "build": "node scripts/build.js && sw-precache --config=config/sw-precache-config.js",
     "test": "node scripts/test.js --env=jsdom",
     "deploy": "npm run build&&gh-pages -d build"
   },
