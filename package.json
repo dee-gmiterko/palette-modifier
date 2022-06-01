@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "chroma-js": "^2.1.0",
     "data-uri-to-buffer": "^4.0.0",
     "foundation-sites": "^6.7.4",
@@ -15,14 +12,20 @@
     "pify": "^5.0.0",
     "range": "^0.0.3",
     "react": "^18.1.0",
+    "sass": "^1.52.1",
+    "styled-components": "^5.3.5",
+    "web-vitals": "^2.1.4",
     "react-color": "^2.19.3",
     "react-dom": "^18.1.0",
     "react-dropzone": "^14.2.1",
-    "react-file-download": "^0.3.5",
+    "react-file-download": "^0.3.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
     "react-scripts": "^5.0.1",
-    "sass": "^1.52.1",
-    "styled-components": "^5.3.5",
-    "web-vitals": "^2.1.4"
+    "nth-check": ">=2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
