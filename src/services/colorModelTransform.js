@@ -1,6 +1,6 @@
 import {range} from 'range';
 
-export default function(sourcePoints, targetPoints, settings) {
+const colorModelTransform = (sourcePoints, targetPoints, settings) => {
 
 	sourcePoints = sourcePoints.concat([[0, 0, 0], [255, 255, 255]]);
 	targetPoints = targetPoints.concat([[0, 0, 0], [255, 255, 255]]);
@@ -14,7 +14,7 @@ export default function(sourcePoints, targetPoints, settings) {
 	var interpolations = range(0, 3).map(i => {
 		var points = zip(sourcePoints.map(p => p[i]), targetPoints.map(p => p[i]));
 		points.sort((a, b) => { return a[0] - b[0] });
-		
+
 		var f = (a) => {
 			var high = 0;
 		    while(points[high][0] < a) {
@@ -63,3 +63,5 @@ export default function(sourcePoints, targetPoints, settings) {
 		});
 	}
 }
+
+export default colorModelTransform;

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import chroma from 'chroma-js';
 
-class RandomColorsButton extends Component {
+const RandomColorsButton = ({ palette, changePaletteColors, }) => {
 
-    randomiseColors() {
-
-        var palette = this.props.palette.slice();
+    const randomiseColors = () => {
+        const paletteCopy = palette.slice();
 
         for(var j=0; j<10; j++) {
             var color = chroma.random();
@@ -13,7 +12,7 @@ class RandomColorsButton extends Component {
             var smallest_s = 999999999;
             var smallest_i = undefined;
             // eslint-disable-next-line no-loop-func
-            palette.forEach((c, i) => {
+            paletteCopy.forEach((c, i) => {
                 var s = color.luminance() - c.luminance();
                 s += color.get('hsl.s') - color.get('hsl.s');
                 s += color.get('hsl.l') - color.get('hsl.l');
@@ -24,15 +23,13 @@ class RandomColorsButton extends Component {
                 }
             });
 
-            palette[smallest_i] = color;
+            paletteCopy[smallest_i] = color;
         }
 
-        this.props.changePaletteColors(palette);
+        changePaletteColors(paletteCopy);
     }
 
-    render() {
-        return <button className="button" onClick={this.randomiseColors.bind(this)}>Random</button>
-    }
+    return <button className="button" onClick={randomiseColors}>Random</button>
 }
 
 export default RandomColorsButton;
